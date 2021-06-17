@@ -10,9 +10,9 @@ Functionality: All CRUD operations, 2 Entities Employee and Item
 
 # CRUD OPERATION SCREENSHOTS
 
-![alt text](addempl.png "addpage screenshot")
-![alt text](updateEmployee.png "update screenshot")
-![alt text](editItem.png "edit screenshot")
-![alt text](deleteEmployee.png "remove screenshot")
+![alt text](addempl.png "addEmployee screenshot")
+![alt text](updateEmployee.png "update Employee screenshot")
+![alt text](editItem.png "edit Item screenshot")
+![alt text](deleteEmployee.png "remove Employee screenshot")
 
 
