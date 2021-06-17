@@ -11,3 +11,8 @@ Functionality: All CRUD operations, 2 Entities Employee and Item
 # CRUD OPERATION SCREENSHOTS
 
 ![alt text](addempl.png "addpage screenshot")
+![alt text](updateEmployee.png "update screenshot")
+![alt text](editItem.png "edit screenshot")
+![alt text](deleteEmployee.png "remove screenshot")
+
+
