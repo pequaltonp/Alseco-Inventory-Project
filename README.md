@@ -2,7 +2,7 @@
 
 This Project uses Spring Boot 2, Spring Data JPA (Hibernate ORM), Spring MVC and Thymeleaf
 
-Functionality: All CRUD operations, 2 Entities Employee and Item
+Functionality: All CRUD operations, 2 Entities Employee and Item are binded one-to-many
 
 # Home Page 
 
