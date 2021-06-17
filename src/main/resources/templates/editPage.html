@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head th:replace="fragments :: header"></head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<br>
+<div class="container">
+    <form th:object="${currentEmployee}" th:action="@{/{id}(id=*{id})}" id="employeeSubmitId"
+          method="post" class="was-validated">
+        <div class="form-group">
+            <label for="fname">Firstname:</label>
+            <input type="text" name="firstname" th:field="*{firstname}" class="form-control" id="fname"
+                   placeholder="Enter Firstname"  required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+            <label for="lname">Lastname:</label>
+            <input type="text" name="lastname" th:field="*{lastname}" class="form-control" id="lname"
+                   placeholder="Enter Lastname"  required>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
+        <div class="form-group">
+            <label for="mname">Middle name:</label>
+            <input type="text" name="middle_name" th:field="*{middlename}" class="form-control" id="mname"
+                   placeholder="Enter Middle name" value=" ">
+        </div>
+
+        <br><br>
+        <h4>List of material values issued</h4>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal">+ Add Item</button>
+        <br><br>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Full name</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, rowStat : *{itemList}">
+                <th scope="row" th:text="${rowStat.index}">
+                </th>
+                <td>
+                    <div class="form-group">
+                        <!-- костыль что бы не дублировалось (P.S ненавижу Thymeleaf) -->
+                        <input type="number" th:field="*{itemList[__${rowStat.index}__].id}"
+                               class="form-control"
+                               placeholder="Enter Lastname" hidden>
+                        <input type="text" th:field="*{itemList[__${rowStat.index}__].name}"
+                               class="form-control" id="name"
+                               placeholder="Enter Lastname"  required >
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <input type="number" th:field="*{itemList[__${rowStat.index}__].cost}"
+                               class="form-control" id="cost"
+                               placeholder="Enter Lastname"  required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                </td>
+                <td>
+                    <a th:href="@{/deleteItem/{id}(id=${item.id})}"
+                       data-dismiss="modal" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </form><br><br>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" data-backdrop="static"
+         data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">New Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${newItem}" th:action="@{/newItem/{emplId}(emplId=${currentEmployee.id})}"
+                          id="addItemId" method="post" class="was-validated">
+                        <div class="form-group">
+                            <label for="itemname">Name:</label>
+                            <input type="text" th:field="*{name}" class="form-control" id="itemname"
+                                   placeholder="Enter Firstname"  required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemcost">Cost:</label>
+                            <input type="number" th:field="*{cost}" name="itemcost" class="form-control"
+                                   id="itemcost" placeholder="Enter Lastname"  required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="submit" onclick="document.getElementById('addItemId').submit()"
+                           class="btn btn-success" value="Save" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit buttons -->
+    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+        <input type="submit" class="btn btn-info"
+               onclick="document.getElementById('employeeSubmitId').submit()" value="Save">
+        <a class="btn btn-secondary" th:href="@{/details/{id}(id=*{id})}">Cancel</a>
+    </div><br><br>
+
+</div>
+
+</body>
+</html>

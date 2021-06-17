@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head th:replace="fragments :: header"></head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<nav class="navbar navbar-expand-sm bg-light justify-content-center">
+    <form class="form-inline" th:action="@{/filter}" method="get">
+        <label for="fname" class="mb-2 mr-sm-2">Full Name:</label>
+        <input type="text" class="form-control mb-2 mr-sm-5" id="fname"
+               placeholder="Enter Name" name="fullname">
+
+        <label for="quantity" class="mb-2 mr-sm-2">Number of things :</label>
+        <input type="number" class="form-control mb-2 mr-sm-5" id="quantity"
+               placeholder="Enter number" name="total_quantity">
+
+        <label for="cost" class="mb-2 mr-sm-2">Total cost:</label>
+        <input type="number" class="form-control mb-2 mr-sm-5" id="cost"
+               placeholder="Enter cost" name="total_cost">
+
+        <button type="submit" class="btn btn-info text-light mb-2">Filter</button>
+    </form>
+</nav>
+
+
+<div class="container">
+    <br>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addEmpl">
+        Add Employee</button>
+    <br><br>
+    <table class="table">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Full name</th>
+        <th scope="col">Items</th>
+        <th scope="col">Total cost</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employeeList}">
+        <th scope="row" th:text="${employee.id}"></th>
+        <td th:text="${employee.toString()}"></td>
+        <td th:text="${employee.itemList.size()}"></td>
+        <td th:text="${employee.totalCost()}"></td>
+        <td><a class="btn btn-primary" th:href="@{/details/{id}(id=${employee.id})}">Details</a></td>
+    </tr>
+    </tbody>
+</table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addEmpl" data-backdrop="static"
+         data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">New Employee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${newEmployee}" th:action="@{/add_employee}"
+                          id="newEmplId" method="post" class="was-validated">
+                        <div class="form-group">
+                            <label for="name1">FirstName:</label>
+                            <input type="text" th:field="*{firstname}" class="form-control"
+                                   id="name1" placeholder="Enter Firstname"  required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name2">Lastname:</label>
+                            <input type="text" th:field="*{lastname}"  class="form-control"
+                                   id="name2" placeholder="Enter Lastname"  required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name3">Middle name:</label>
+                            <input type="text" th:field="*{middlename}"  class="form-control"
+                                   id="name3" placeholder="Enter Lastname"  required>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="submit" onclick="document.getElementById('newEmplId').submit()" class="btn btn-success" value="Save" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

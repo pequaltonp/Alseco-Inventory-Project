@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th ="http://www.thymeleaf.org">
+<head th:replace="fragments :: header"></head>
+<body>
+<div th:replace="fragments :: navbar"></div>
+<br>
+<div class="container">
+    <label> Firstname : </label>
+    <strong th:text="${currentEmployee.firstname}"></strong><br>
+
+    <label> Lastname : </label>
+    <strong th:text="${currentEmployee.lastname}"></strong><br>
+
+    <label> Middle name :</label>
+    <strong th:text="${currentEmployee.middlename}"></strong>
+    <br><br>
+
+    <h4>List of material values issued</h4><br>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Full name</th>
+            <th scope="col">Cost</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, rowStat : ${currentEmployee.itemList}">
+            <th scope="row" th:text="${rowStat.index}"></th>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.cost}"></td>
+        </tr>
+        <tr style="background: #88ffd4">
+            <th scope="row" colspan="2">Total cost</th>
+            <td th:text="${currentEmployee.totalCost()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br><br>
+    <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+        <a class="btn btn-success" th:href="@{/edit/{id}(id=${currentEmployee.id})}">Update</a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+            Delete
+        </button>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Are you sure ?</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    After confirmation, the action is not refundable
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer justify-content-between">
+                    <a th:href="@{/delete/{id}(id=${currentEmployee.id})}" class="btn btn-danger">Delete</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
